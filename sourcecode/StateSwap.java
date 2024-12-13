@@ -12,7 +12,7 @@ public class StateSwap {
 	}
 
 	public int getiArg1() {
-		return iArg1;
+		return iArg1;	
 	}
 
 	public int getiArg2() {
@@ -23,4 +23,5 @@ public class StateSwap {
 		this.iArg1 = iArg1;
 		this.iArg2 = iArg2;
 	}	
+	
 }

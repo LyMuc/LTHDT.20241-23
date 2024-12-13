@@ -18,5 +18,5 @@ public class StateSorting {
 	public void setiArg1(int iArg1) {
 		this.iArg1 = iArg1;
 	}
-	
 }
+
