@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SortingController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <!-- Title -->
+    <StackPane style="-fx-background-color: black;">
+        <Text text="23Sort" style="-fx-fill: red; -fx-font-size: 24;"/>
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+    </StackPane>
+
+    <!-- Input Section -->
+    <VBox spacing="5" style="-fx-border-color: lightgray; -fx-padding: 10;">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Array Size:"/>
+            <Spinner fx:id="arraySizeSpinner" editable="true" prefWidth="100"/>
+        </HBox>
+        
+        <Label text="Enter numbers (separated by spaces):"/>
+        <TextField fx:id="arrayInput"/>
+        
+        <HBox spacing="10" >
+            <Button text="Random Array" onAction="#generateRandomArray" style="-fx-background-color: red; -fx-text-fill: white;"/>
+            <Button text="Clear" onAction="#clearArray"/>
+        </HBox>
+    </VBox>
+
+    <!-- Start Button -->
+    <HBox alignment="CENTER">
+        <Button fx:id="startSortingBtn" text="Start Sorting" 
+                onAction="#showSortOptions"
+                style="-fx-background-color: red; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- Results Area -->
+    <VBox spacing="5" style="-fx-border-color: lightgray; -fx-padding: 10;" VBox.vgrow="ALWAYS">
+        <Label text="Result:"/>
+        <TextArea fx:id="resultArea" prefRowCount="6" editable="false" VBox.vgrow="ALWAYS"/>
+    </VBox>
+
+    <!-- Hidden Sort Options -->
+    <HBox fx:id="sortOptionsBox" spacing="10" alignment="CENTER" visible="false">
+        <Button text="Sort Now" onAction="#sortNow"/>
+        <Button text="Sort with Color" onAction="#sortWithColor"/>
+    </HBox>
+</VBox>
