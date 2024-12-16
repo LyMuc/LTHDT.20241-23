@@ -4,12 +4,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class HelloFX extends Application {
+public class Home extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Load the FXML file
-        Parent root = FXMLLoader.load(getClass().getResource("llaalla.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
 
         // Set up the scene
         Scene scene = new Scene(root);

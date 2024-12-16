@@ -1,42 +1,65 @@
+public class InsertionSort {
+    private int[] iArray;
+    private int iNbElement;
+    private int iSorted; // Chỉ số đã được sắp xếp
+    private int iTarget; // Chỉ số phần tử được chọn
 
-public class InsertionSort extends Sort{
-	
-	private int iTarget;
-	private int iSorted;
-	public InsertionSort(int[] iArray, int iNbElement) {
-		super(iArray, iNbElement);
-		// TODO Auto-generated constructor stub
-		this.iSorted=0;
-		this.iTarget=0;
-	}
+    public InsertionSort(int[] iArray, int iNbElement) {
+        this.iArray = iArray;
+        this.iNbElement = iNbElement;
+        this.iSorted = 0;
+        this.iTarget = 0;
+    }
 
-	public StateSorting getStateSorting() // Phương thức để lấy về chỉ số của phần tử lớn nhất trong số các phần tử còn lại
-										  // Đây là với trường hợp của InsertionSort, còn các sort khác thì dựa trên thuật toán
-	{
-		int minn=1000000;
-		if(iSorted==iNbElement-1) bSortDone=true;
-		for(int i=iSorted; i<iNbElement; i++)
-		{
-			//... Tim phan tu lon nhat tai moi buoc
-			if(iArray[i]<minn)
-			{
-				minn=iArray[i];
-				iTarget=i;
-			}
-		}
-		stateSorting.setiArg1(iTarget);
-		return(stateSorting);
-	}
-	
-	public StateSwap getSwapSorting() // Phuong thức để lấy về chỉ số của 2 phần tử sẽ đổi chỗ tại bước này
-	{
-		stateSwap.setiArg(iSorted, iTarget); //2 số cần quan tâm tại thời điểm này
-		
-		int temp=stateSwap.getiArg2();
-		iArray[iSorted]=iArray[iTarget]; //Đổi chỗ 2 phần tử này
-		iArray[iTarget]=temp;
-		
-		iSorted++; //Số phần tử đã xét tăng lên 1
-		return(stateSwap);
-	}
+    public int getiSorted() {
+        return iSorted;
+    }
+
+    public void sort() {
+        for (int i = 1; i < iNbElement; i++) {
+            int key = iArray[i];
+            int j = i - 1;
+
+            // Di chuyển các phần tử lớn hơn key lên một vị trí phía sau
+            while (j >= 0 && iArray[j] > key) {
+                iArray[j + 1] = iArray[j];
+                j = j - 1;
+            }
+
+            iArray[j + 1] = key;
+        }
+    }
+
+    // Kiểm tra xem mảng đã được sắp xếp hay chưa
+    public boolean isSorted() {
+        return iSorted >= iNbElement - 1;
+    }
+
+    // Trả về mảng hiện tại
+    public int[] getArray() {
+        return iArray;
+    }
+
+    // Lấy trạng thái chỉ số phần tử được chọn trong bước sắp xếp
+    public StateSorting getStateSorting() {
+        iTarget = iSorted; // Mặc định chọn chính phần tử tại iSorted
+        for (int j = iSorted + 1; j < iNbElement; j++) {
+            if (iArray[j] < iArray[iTarget]) {
+                iTarget = j; // Cập nhật chỉ số phần tử nhỏ nhất
+            }
+        }
+        return new StateSorting(iTarget);
+    }
+
+    // Hoán đổi và trả về trạng thái đổi chỗ của mảng
+    public StateSwap getSwapSorting() {
+        if (iTarget != iSorted) {
+            int temp = iArray[iSorted];
+            iArray[iSorted] = iArray[iTarget];
+            iArray[iTarget] = temp;
+        }
+        StateSwap swap = new StateSwap(iSorted, iTarget);
+        iSorted++; // Chuyển sang phần tử tiếp theo
+        return swap;
+    }
 }

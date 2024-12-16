@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InsertionController">
+   <padding>
+      <Insets bottom="10" left="10" right="10" top="10" />
+   </padding>
+   <children>
+      <StackPane style="-fx-background-color: black;">
+         <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+         </padding>
+         <children>
+            <Text style="-fx-fill: red; -fx-font-size: 24;" text="Insertion Sort" />
+         </children>
+      </StackPane>
+      <VBox spacing="5" style="-fx-border-color: lightgray; -fx-padding: 10;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="554.0">
+               <children>
+                  <HBox maxHeight="50.0" minHeight="29.0" minWidth="400.0" prefHeight="29.0" prefWidth="400.0">
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="55.0" text="Array Size:" />
+                        <Spinner fx:id="arraySizeSpinner" editable="true" prefHeight="32.0" prefWidth="100" />
+                     </children>
+                  </HBox>
+                  <HBox minHeight="30.0" prefHeight="100.0" prefWidth="154.0">
+                     <children>
+                        <Button fx:id="BackButton" contentDisplay="RIGHT" onAction="#BackToMenu" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: red; -fx-text-fill: white;" text="Back" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <Label text="Enter numbers (separated by spaces):" />
+            <TextField fx:id="arrayInput" />
+            <HBox spacing="10">
+               <children>
+                  <Button onAction="#generateRandomArray" style="-fx-background-color: red; -fx-text-fill: white;" text="Random Array" />
+                  <Button onAction="#clearArray" text="Clear" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER">
+         <children>
+            <Button fx:id="startSortingBtn" onAction="#showSortOptions" style="-fx-background-color: red; -fx-text-fill: white;" text="Start Sorting" />
+         </children>
+      </HBox>
+      <VBox spacing="5" style="-fx-border-color: lightgray; -fx-padding: 10;" VBox.vgrow="ALWAYS">
+         <children>
+            <Label text="Result:" />
+            <TextFlow fx:id="resultArea" prefHeight="200.0" prefWidth="462.0" />
+         </children>
+      </VBox>
+      <HBox fx:id="sortOptionsBox" alignment="CENTER" spacing="10" visible="false">
+         <children>
+            <Button onAction="#sortNow" text="Sort Now" />
+            <Button onAction="#sortWithColor" text="Sort with Color" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
