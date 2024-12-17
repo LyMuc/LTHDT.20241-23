@@ -38,7 +38,6 @@ public class MergeSort extends Sort {
             // Cập nhật trạng thái hoán đổi
             stateSwap.setiArg(stepI, stepJ);
             stateSorting.setiArg1(stepI);
-    
             // So sánh và gộp
             if (tempArray[stepI] <= tempArray[stepJ]) {
                 iArray[stepK++] = tempArray[stepI++];
