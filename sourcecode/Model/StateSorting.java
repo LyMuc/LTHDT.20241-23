@@ -1,3 +1,4 @@
+package Model;
 
 public class StateSorting {
 	private int iArg1;

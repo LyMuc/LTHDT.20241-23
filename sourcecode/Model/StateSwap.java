@@ -1,3 +1,4 @@
+package Model;
 
 public class StateSwap {
 	private int iArg1, iArg2;

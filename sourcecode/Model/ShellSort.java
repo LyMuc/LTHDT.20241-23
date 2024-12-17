@@ -1,3 +1,5 @@
+package Model;
+
 public class ShellSort extends Sort {
 
     private int gap; // Khoảng cách giữa các phần tử trong nhóm
@@ -16,6 +18,7 @@ public class ShellSort extends Sort {
 
     @Override
     public StateSorting getStateSorting() {
+        nextStep();
         return stateSorting;
     }
 
@@ -35,13 +38,13 @@ public class ShellSort extends Sort {
                 gap /= 2; // Giảm khoảng cách gap
                 if (gap == 0) {
                     stateSwap.setiArg(-1, -1); // xóa trạng thái thừa
-                    stateSorting.setiArg1(-12); // xóa trạng thái thừa
+                    stateSorting.setiArg1(-1); // xóa trạng thái thừa
                     bSortDone = true;
                     return;
                 }
                 i = gap;
                 stateSwap.setiArg(-1, -1);
-                stateSorting.setiArg1(-12);
+                stateSorting.setiArg1(-1);
                 return;
             }
 
@@ -61,7 +64,7 @@ public class ShellSort extends Sort {
             }
         } else {
             stateSwap.setiArg(-1, -1); // Xóa trạng thái không cần thiết
-            stateSorting.setiArg1(-12);
+            stateSorting.setiArg1(-1);
             iArray[j] = currentElement;
             stepInitialized = false;
             i++;
@@ -83,15 +86,8 @@ public class ShellSort extends Sort {
     public void setI(int i) {
         this.i = i;
     }
-
-    public void sort() {
-        while (!bSortDone) {
-            nextStep(); // Thực hiện một bước sắp xếp
-        }
-    }
-
-    // Phương thức getArray để lấy mảng đã sắp xếp
+    
     public int[] getArray() {
-        return iArray;
+        return iArray; // iArray là mảng lưu trữ chính từ lớp cha Sort
     }
 }

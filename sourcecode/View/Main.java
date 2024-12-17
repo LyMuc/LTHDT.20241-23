@@ -1,3 +1,7 @@
+package View;
+import Model.StateSorting;
+import Model.StateSwap;
+
 public class Main {
 	public static void Color(Object state) {
 		if (state instanceof StateSorting) {

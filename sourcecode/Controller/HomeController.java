@@ -1,3 +1,4 @@
+package Controller;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class HomeController {
     
     @FXML
     public void switchToInsertion(MouseEvent event) throws IOException {
-    	Parent root=FXMLLoader.load(getClass().getResource("insertionSort.fxml"));
+    	Parent root=FXMLLoader.load(getClass().getResource("../View/insertionSort.fxml"));
     	stage=(Stage)((Node)event.getSource()).getScene().getWindow();
     	scene=new Scene(root);
     	stage.setScene(scene);
@@ -40,7 +41,7 @@ public class HomeController {
 
     @FXML
     public void switchToMerge(MouseEvent event) throws IOException {
-    	Parent root=FXMLLoader.load(getClass().getResource("mergeSort.fxml"));
+    	Parent root=FXMLLoader.load(getClass().getResource("../View/mergeSort.fxml"));
     	stage=(Stage)((Node)event.getSource()).getScene().getWindow();
     	scene=new Scene(root);
     	stage.setScene(scene);
@@ -49,7 +50,7 @@ public class HomeController {
 
     @FXML
     public void switchToShell(MouseEvent event) throws IOException {
-    	Parent root=FXMLLoader.load(getClass().getResource("shellSort.fxml"));
+    	Parent root=FXMLLoader.load(getClass().getResource("../View/shellSort.fxml"));
     	stage=(Stage)((Node)event.getSource()).getScene().getWindow();
     	scene=new Scene(root);
     	stage.setScene(scene);
