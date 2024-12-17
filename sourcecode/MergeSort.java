@@ -1,3 +1,4 @@
+package Model;
 
 public class MergeSort extends Sort {
     private int currentSize; // Kích thước của các đoạn đang được xử lý
