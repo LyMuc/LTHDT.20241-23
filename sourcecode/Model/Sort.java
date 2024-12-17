@@ -25,6 +25,4 @@ public abstract class Sort {
 	public abstract StateSorting getStateSorting(); 
     public abstract StateSwap getSwapSorting();
 
-	
-	
 }
