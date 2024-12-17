@@ -1,3 +1,4 @@
+package Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -13,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -21,10 +23,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
-public class MergeController {
-    @FXML
-    private Button BackButton;
+import Model.*;
 
+public class InsertionController {
     @FXML
     private TextField arrayInput;
 
@@ -44,8 +45,8 @@ public class MergeController {
     private ToggleGroup sortingAlgorithm;
     private Timeline timeline;
 
-    // Declare mergeSort at class level
-    private MergeSort mergeSort;
+    // Declare insertionSort at class level
+    private InsertionSort insertionSort;
     private boolean isSorting = false;
     private Stage stage;
     private Scene scene;
@@ -53,7 +54,7 @@ public class MergeController {
 
     @FXML
     void BackToMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../View/homepage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -97,11 +98,9 @@ public class MergeController {
 
             // Clear the result area and display the generated array
             resultArea.getChildren().clear();
-            resultArea.getChildren().add(new Text("Generated array with " + size + " elements: "));
-            resultArea.getChildren().add(new Text(Arrays.toString(array)));
 
-            // Initialize mergeSort object
-            mergeSort = new MergeSort(array, size);
+            // Initialize insertionSort object
+            insertionSort = new InsertionSort(array, size);
 
         } catch (Exception e) {
             showAlert("Error generating random array");
@@ -122,7 +121,7 @@ public class MergeController {
 
     @FXML
     void sortNow() {
-        // Parse the input array from the TextField
+
         String[] inputArray = arrayInput.getText().split("\\s+");
         int size = inputArray.length;
         if (size == 0) {
@@ -131,24 +130,21 @@ public class MergeController {
             return;
         }
 
-        // Convert the input to an integer array
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = Integer.parseInt(inputArray[i]);
         }
 
-        // Create mergeSort instance
-        MergeSort mergeSort = new MergeSort(array, size);
+        InsertionSort insertionSort = new InsertionSort(array, size);
 
-        // Perform sorting
-        mergeSort.sort();
+        insertionSort.sort();
 
-        // Clear resultArea and display the sorted array
         resultArea.getChildren().clear();
         StringBuilder sortedArrayText = new StringBuilder();
         for (int num : array) {
             sortedArrayText.append(num).append(" ");
         }
+
         resultArea.getChildren().add(new Text(sortedArrayText.toString()));
     }
 
@@ -172,7 +168,7 @@ public class MergeController {
                 array[i] = Integer.parseInt(parts[i]);
             }
 
-            mergeSort = new MergeSort(array, array.length);
+            insertionSort = new InsertionSort(array, array.length);
             isSorting = true;
 
             // Hiển thị mảng ban đầu
@@ -188,29 +184,35 @@ public class MergeController {
     }
 
     private void performSortingStep() {
-        if (mergeSort.isSorted()) {
+        if (insertionSort.isSorted()) {
             timeline.stop();
-            displayArray(mergeSort.getArray(), -1, -1);
+            displayArray(insertionSort.getArray(), -1, -1);
 
             isSorting = false;
         } else {
-            StateSorting stateSorting = mergeSort.getStateSorting();
-            StateSwap stateSwap = mergeSort.getSwapSorting();
-            displayArray(mergeSort.getArray(), stateSorting.getiArg1(), stateSwap.getiArg1());
+            StateSorting stateSorting = insertionSort.getStateSorting();
+            StateSwap stateSwap = insertionSort.getSwapSorting();
+            displayArray(insertionSort.getArray(), stateSorting.getiArg1(), stateSwap.getiArg1());
         }
     }
 
     private void displayArray(int[] array, int current, int swapping) {
         resultArea.getChildren().clear();
+        resultArea.setTextAlignment(TextAlignment.CENTER);
+
         for (int i = 0; i < array.length; i++) {
             Text text = new Text(array[i] + " ");
+
+            text.setStyle("-fx-font-size: 36px;");
+
             if (i == current) {
-                text.setStyle("-fx-fill: red; -fx-font-size: 16px;"); // Highlight phần tử hiện tại
+                text.setStyle("-fx-fill: red; -fx-font-size: 36px;");
             } else if (i == swapping) {
-                text.setStyle("-fx-fill: blue; -fx-font-size: 16px;"); // Highlight phần tử hoán đổi
+                text.setStyle("-fx-fill: blue; -fx-font-size: 36px;");
             } else {
-                text.setStyle("-fx-fill: black; -fx-font-size: 14px;"); // Mặc định
+                text.setStyle("-fx-fill: black; -fx-font-size: 36px;");
             }
+
             resultArea.getChildren().add(text);
         }
     }

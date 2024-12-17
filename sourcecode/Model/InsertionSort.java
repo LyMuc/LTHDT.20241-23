@@ -1,3 +1,5 @@
+package Model;
+
 public class InsertionSort {
     private int[] iArray;
     private int iNbElement;

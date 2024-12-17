@@ -1,3 +1,4 @@
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +10,7 @@ public class Home extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Load the FXML file
-        Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("View/homepage.fxml"));
 
         // Set up the scene
         Scene scene = new Scene(root);
