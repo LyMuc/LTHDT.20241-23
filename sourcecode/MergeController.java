@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -97,8 +98,6 @@ public class MergeController {
 
             // Clear the result area and display the generated array
             resultArea.getChildren().clear();
-            resultArea.getChildren().add(new Text("Generated array with " + size + " elements: "));
-            resultArea.getChildren().add(new Text(Arrays.toString(array)));
 
             // Initialize mergeSort object
             mergeSort = new MergeSort(array, size);
@@ -155,35 +154,46 @@ public class MergeController {
     @FXML
     void sortWithColor() {
         if (isSorting) {
-            return;
+            timeline.stop(); // Dừng timeline nếu đang chạy
+            isSorting = false; // Đặt lại trạng thái
         }
+
+        // Reset bSortDone trước khi bắt đầu mới
+        Sort.bSortDone = false;
 
         // Lấy dữ liệu từ inputArea
         String inputText = arrayInput.getText().trim();
         if (inputText.isEmpty()) {
-
+            showAlert("No array input provided.");
             return;
         }
 
         try {
+            // Chuyển input thành mảng số nguyên
             String[] parts = inputText.split("\\s+");
             int[] array = new int[parts.length];
             for (int i = 0; i < parts.length; i++) {
                 array[i] = Integer.parseInt(parts[i]);
             }
 
+            // Reset và khởi tạo mergeSort mới
             mergeSort = new MergeSort(array, array.length);
             isSorting = true;
 
             // Hiển thị mảng ban đầu
             displayArray(array, -1, -1);
 
-            // Cấu hình animation để tự động chạy sorting
+            // Reset timeline để bắt đầu từ đầu
+            if (timeline != null) {
+                timeline.stop();
+            }
+
             timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> performSortingStep()));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
-        } catch (NumberFormatException e) {
 
+        } catch (NumberFormatException e) {
+            showAlert("Invalid input. Please enter a valid array of integers.");
         }
     }
 
@@ -202,15 +212,21 @@ public class MergeController {
 
     private void displayArray(int[] array, int current, int swapping) {
         resultArea.getChildren().clear();
+        resultArea.setTextAlignment(TextAlignment.CENTER);
         for (int i = 0; i < array.length; i++) {
             Text text = new Text(array[i] + " ");
+
+            // Điều chỉnh font-size và màu sắc
+            text.setStyle("-fx-font-size: 36px;");
+
             if (i == current) {
-                text.setStyle("-fx-fill: red; -fx-font-size: 16px;"); // Highlight phần tử hiện tại
+                text.setStyle("-fx-fill: red; -fx-font-size: 36px;");
             } else if (i == swapping) {
-                text.setStyle("-fx-fill: blue; -fx-font-size: 16px;"); // Highlight phần tử hoán đổi
+                text.setStyle("-fx-fill: blue; -fx-font-size: 36px;");
             } else {
-                text.setStyle("-fx-fill: black; -fx-font-size: 14px;"); // Mặc định
+                text.setStyle("-fx-fill: black; -fx-font-size: 36px;");
             }
+
             resultArea.getChildren().add(text);
         }
     }

@@ -9,16 +9,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
 
 public class ShellController {
+
+    @FXML
+    private Button BackButton;
+
     @FXML
     private TextField arrayInput;
 
@@ -38,8 +41,8 @@ public class ShellController {
     private ToggleGroup sortingAlgorithm;
     private Timeline timeline;
 
-    // Declare shellsort at class level
-    private ShellSort shellsort;
+    // Declare shellSort at class level
+    private ShellSort shellSort;
     private boolean isSorting = false;
     private Stage stage;
     private Scene scene;
@@ -52,7 +55,6 @@ public class ShellController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
@@ -75,12 +77,11 @@ public class ShellController {
     void generateRandomArray() {
         try {
             int size = arraySizeSpinner.getValue();
-            Random rand = new Random();
             int[] array = new int[size];
             StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < size; i++) {
-                array[i] = rand.nextInt(100);
+                array[i] = (int) (Math.random() * 100);
                 result.append(array[i]);
                 if (i < size - 1) {
                     result.append(" ");
@@ -91,11 +92,9 @@ public class ShellController {
 
             // Clear the result area and display the generated array
             resultArea.getChildren().clear();
-            resultArea.getChildren().add(new Text("Generated array with " + size + " elements: "));
-            resultArea.getChildren().add(new Text(Arrays.toString(array)));
 
-            // Initialize shellsort object
-            shellsort = new ShellSort(array, size);
+            // Initialize shellSort object
+            shellSort = new ShellSort(array, size);
 
         } catch (Exception e) {
             showAlert("Error generating random array");
@@ -131,11 +130,13 @@ public class ShellController {
             array[i] = Integer.parseInt(inputArray[i]);
         }
 
-        // Create shellsort instance
-        shellsort = new ShellSort(array, size);
+        // Create shellSort instance
+        ShellSort shellSort = new ShellSort(array, size);
 
         // Perform sorting
-        shellsort.sort();
+        while (!shellSort.bSortDone) {
+            shellSort.getStateSorting();
+        }
 
         // Clear resultArea and display the sorted array
         resultArea.getChildren().clear();
@@ -149,61 +150,78 @@ public class ShellController {
     @FXML
     void sortWithColor() {
         if (isSorting) {
-            return;
+            return; // If already sorting, don't start another sorting process
         }
 
-        // Lấy dữ liệu từ inputArea
+        // Reset the bSortDone flag before starting new sort
+        Sort.bSortDone = false;
+
+        // Get data from input area
         String inputText = arrayInput.getText().trim();
         if (inputText.isEmpty()) {
+            showAlert("No array input provided.");
             return;
         }
 
         try {
+            // Convert input to integer array
             String[] parts = inputText.split("\\s+");
             int[] array = new int[parts.length];
             for (int i = 0; i < parts.length; i++) {
                 array[i] = Integer.parseInt(parts[i]);
             }
 
-            shellsort = new ShellSort(array, array.length);
+            // Initialize shellSort instance
+            shellSort = new ShellSort(array, array.length);
             isSorting = true;
 
-            // Hiển thị mảng ban đầu
+            // Display the initial array
             displayArray(array, -1, -1);
 
-            // Cấu hình animation để tự động chạy sorting
+            // Reset the timeline and start from the beginning
+            if (timeline != null) {
+                timeline.stop();
+            }
+
             timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> performSortingStep()));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
-        } catch (NumberFormatException e) {
 
+        } catch (NumberFormatException e) {
+            showAlert("Invalid input. Please enter a valid array of integers.");
         }
     }
 
     private void performSortingStep() {
-        if (shellsort.bSortDone) { // Dùng bSortDone thay cho isSorted()
+        if (shellSort.bSortDone) {
             timeline.stop();
-            displayArray(shellsort.getArray(), -1, -1);
-
+            displayArray(shellSort.iArray, -1, -1);
             isSorting = false;
         } else {
-            StateSorting stateSorting = shellsort.getStateSorting();
-            StateSwap stateSwap = shellsort.getSwapSorting();
-            displayArray(shellsort.getArray(), stateSorting.getiArg1(), stateSwap.getiArg1());
+            StateSorting stateSorting = shellSort.getStateSorting();
+            StateSwap stateSwap = shellSort.getSwapSorting();
+            displayArray(shellSort.iArray, stateSorting.getiArg1(), stateSwap.getiArg1());
         }
     }
 
     private void displayArray(int[] array, int current, int swapping) {
         resultArea.getChildren().clear();
+        resultArea.setTextAlignment(TextAlignment.CENTER);
+
         for (int i = 0; i < array.length; i++) {
             Text text = new Text(array[i] + " ");
+
+            // Adjust font-size and color
+            text.setStyle("-fx-font-size: 36px;");
+
             if (i == current) {
-                text.setStyle("-fx-fill: red; -fx-font-size: 16px;"); // Highlight phần tử hiện tại
+                text.setStyle("-fx-fill: red; -fx-font-size: 36px;");
             } else if (i == swapping) {
-                text.setStyle("-fx-fill: blue; -fx-font-size: 16px;"); // Highlight phần tử hoán đổi
+                text.setStyle("-fx-fill: blue; -fx-font-size: 36px;");
             } else {
-                text.setStyle("-fx-fill: black; -fx-font-size: 14px;"); // Mặc định
+                text.setStyle("-fx-fill: black; -fx-font-size: 36px;");
             }
+
             resultArea.getChildren().add(text);
         }
     }

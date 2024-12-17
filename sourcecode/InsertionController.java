@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -94,8 +95,6 @@ public class InsertionController {
 
             // Clear the result area and display the generated array
             resultArea.getChildren().clear();
-            resultArea.getChildren().add(new Text("Generated array with " + size + " elements: "));
-            resultArea.getChildren().add(new Text(Arrays.toString(array)));
 
             // Initialize insertionSort object
             insertionSort = new InsertionSort(array, size);
@@ -134,19 +133,28 @@ public class InsertionController {
             array[i] = Integer.parseInt(inputArray[i]);
         }
 
-        // Create InsertionSort instance
-        InsertionSort insertionSort = new InsertionSort(array, size);
+        // Create shellSort instance
+        ShellSort shellSort = new ShellSort(array, size);
 
         // Perform sorting
-        insertionSort.sort();
+        while (!shellSort.bSortDone) {
+            shellSort.getStateSorting();
+        }
 
         // Clear resultArea and display the sorted array
         resultArea.getChildren().clear();
+        resultArea.setTextAlignment(TextAlignment.CENTER); // Center align the elements in TextFlow
+
         StringBuilder sortedArrayText = new StringBuilder();
         for (int num : array) {
             sortedArrayText.append(num).append(" ");
         }
-        resultArea.getChildren().add(new Text(sortedArrayText.toString()));
+
+        // Set font size and color to match the style of sortWithColor
+        Text sortedText = new Text(sortedArrayText.toString());
+        sortedText.setStyle("-fx-font-size: 36px; -fx-fill: black;");
+
+        resultArea.getChildren().add(sortedText);
     }
 
     @FXML
@@ -199,15 +207,21 @@ public class InsertionController {
 
     private void displayArray(int[] array, int current, int swapping) {
         resultArea.getChildren().clear();
+        resultArea.setTextAlignment(TextAlignment.CENTER);
+
         for (int i = 0; i < array.length; i++) {
             Text text = new Text(array[i] + " ");
+
+            text.setStyle("-fx-font-size: 36px;");
+
             if (i == current) {
-                text.setStyle("-fx-fill: red; -fx-font-size: 16px;"); // Highlight phần tử hiện tại
+                text.setStyle("-fx-fill: red; -fx-font-size: 36px;");
             } else if (i == swapping) {
-                text.setStyle("-fx-fill: blue; -fx-font-size: 16px;"); // Highlight phần tử hoán đổi
+                text.setStyle("-fx-fill: blue; -fx-font-size: 36px;");
             } else {
-                text.setStyle("-fx-fill: black; -fx-font-size: 14px;"); // Mặc định
+                text.setStyle("-fx-fill: black; -fx-font-size: 36px;");
             }
+
             resultArea.getChildren().add(text);
         }
     }
