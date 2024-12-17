@@ -45,7 +45,6 @@ public class MergeController {
     private ToggleGroup sortingAlgorithm;
     private Timeline timeline;
 
-    // Declare mergeSort at class level
     private MergeSort mergeSort;
     private boolean isSorting = false;
     private Stage stage;
@@ -96,10 +95,8 @@ public class MergeController {
 
             arrayInput.setText(result.toString());
 
-            // Clear the result area and display the generated array
             resultArea.getChildren().clear();
 
-            // Initialize mergeSort object
             mergeSort = new MergeSort(array, size);
 
         } catch (Exception e) {
@@ -121,7 +118,7 @@ public class MergeController {
 
     @FXML
     void sortNow() {
-        // Parse the input array from the TextField
+
         String[] inputArray = arrayInput.getText().split("\\s+");
         int size = inputArray.length;
         if (size == 0) {
@@ -130,19 +127,15 @@ public class MergeController {
             return;
         }
 
-        // Convert the input to an integer array
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = Integer.parseInt(inputArray[i]);
         }
 
-        // Create mergeSort instance
         MergeSort mergeSort = new MergeSort(array, size);
 
-        // Perform sorting
         mergeSort.sort();
 
-        // Clear resultArea and display the sorted array
         resultArea.getChildren().clear();
         StringBuilder sortedArrayText = new StringBuilder();
         for (int num : array) {
@@ -154,14 +147,12 @@ public class MergeController {
     @FXML
     void sortWithColor() {
         if (isSorting) {
-            timeline.stop(); // Dừng timeline nếu đang chạy
-            isSorting = false; // Đặt lại trạng thái
+            timeline.stop();
+            isSorting = false;
         }
 
-        // Reset bSortDone trước khi bắt đầu mới
         Sort.bSortDone = false;
 
-        // Lấy dữ liệu từ inputArea
         String inputText = arrayInput.getText().trim();
         if (inputText.isEmpty()) {
             showAlert("No array input provided.");
@@ -169,21 +160,18 @@ public class MergeController {
         }
 
         try {
-            // Chuyển input thành mảng số nguyên
+
             String[] parts = inputText.split("\\s+");
             int[] array = new int[parts.length];
             for (int i = 0; i < parts.length; i++) {
                 array[i] = Integer.parseInt(parts[i]);
             }
 
-            // Reset và khởi tạo mergeSort mới
             mergeSort = new MergeSort(array, array.length);
             isSorting = true;
 
-            // Hiển thị mảng ban đầu
             displayArray(array, -1, -1);
 
-            // Reset timeline để bắt đầu từ đầu
             if (timeline != null) {
                 timeline.stop();
             }

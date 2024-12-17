@@ -118,7 +118,7 @@ public class InsertionController {
 
     @FXML
     void sortNow() {
-        // Parse the input array from the TextField
+
         String[] inputArray = arrayInput.getText().split("\\s+");
         int size = inputArray.length;
         if (size == 0) {
@@ -127,34 +127,22 @@ public class InsertionController {
             return;
         }
 
-        // Convert the input to an integer array
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = Integer.parseInt(inputArray[i]);
         }
 
-        // Create shellSort instance
-        ShellSort shellSort = new ShellSort(array, size);
+        InsertionSort insertionSort = new InsertionSort(array, size);
 
-        // Perform sorting
-        while (!shellSort.bSortDone) {
-            shellSort.getStateSorting();
-        }
+        insertionSort.sort();
 
-        // Clear resultArea and display the sorted array
         resultArea.getChildren().clear();
-        resultArea.setTextAlignment(TextAlignment.CENTER); // Center align the elements in TextFlow
-
         StringBuilder sortedArrayText = new StringBuilder();
         for (int num : array) {
             sortedArrayText.append(num).append(" ");
         }
 
-        // Set font size and color to match the style of sortWithColor
-        Text sortedText = new Text(sortedArrayText.toString());
-        sortedText.setStyle("-fx-font-size: 36px; -fx-fill: black;");
-
-        resultArea.getChildren().add(sortedText);
+        resultArea.getChildren().add(new Text(sortedArrayText.toString()));
     }
 
     @FXML

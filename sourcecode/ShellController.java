@@ -115,7 +115,6 @@ public class ShellController {
 
     @FXML
     void sortNow() {
-        // Parse the input array from the TextField
         String[] inputArray = arrayInput.getText().split("\\s+");
         int size = inputArray.length;
         if (size == 0) {
@@ -145,6 +144,18 @@ public class ShellController {
             sortedArrayText.append(num).append(" ");
         }
         resultArea.getChildren().add(new Text(sortedArrayText.toString()));
+    }
+
+    private void performSortingStep() {
+        if (shellSort.bSortDone) {
+            timeline.stop();
+            displayArray(shellSort.iArray, -1, -1);
+        } else {
+            // Lấy trạng thái hiện tại của việc sắp xếp và hoán đổi
+            StateSorting stateSorting = shellSort.getStateSorting();
+            StateSwap stateSwap = shellSort.getSwapSorting();
+            displayArray(shellSort.iArray, stateSorting.getiArg1(), stateSwap.getiArg1());
+        }
     }
 
     @FXML
@@ -189,18 +200,6 @@ public class ShellController {
 
         } catch (NumberFormatException e) {
             showAlert("Invalid input. Please enter a valid array of integers.");
-        }
-    }
-
-    private void performSortingStep() {
-        if (shellSort.bSortDone) {
-            timeline.stop();
-            displayArray(shellSort.iArray, -1, -1);
-            isSorting = false;
-        } else {
-            StateSorting stateSorting = shellSort.getStateSorting();
-            StateSwap stateSwap = shellSort.getSwapSorting();
-            displayArray(shellSort.iArray, stateSorting.getiArg1(), stateSwap.getiArg1());
         }
     }
 
