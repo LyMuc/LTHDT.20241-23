@@ -14,6 +14,26 @@ public class ShellSort extends Sort {
         this.setI(gap);
         this.j = i;
         this.setStepInitialized(false);
+        bSortDone=false;
+    }
+    
+    public void sort()
+    {
+    	for (int gap = iNbElement / 2; gap > 0; gap /= 2) {
+            // Thực hiện sắp xếp chèn với khoảng cách gap
+            for (int i = gap; i < iNbElement; i++) {
+                int temp = iArray[i];
+                int j;
+
+                // Dịch các phần tử lớn hơn về phía trước để tạo khoảng trống
+                for (j = i; j >= gap && iArray[j - gap] > temp; j -= gap) {
+                    iArray[j] = iArray[j - gap];
+                }
+
+                // Đặt giá trị tạm thời vào đúng vị trí
+                iArray[j] = temp;
+            }
+        }
     }
 
     @Override
@@ -87,7 +107,4 @@ public class ShellSort extends Sort {
         this.i = i;
     }
     
-    public int[] getArray() {
-        return iArray; // iArray là mảng lưu trữ chính từ lớp cha Sort
-    }
 }

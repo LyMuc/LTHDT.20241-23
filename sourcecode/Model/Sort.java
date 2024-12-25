@@ -17,12 +17,18 @@ public abstract class Sort {
 		this.stateSwap = new StateSwap();
 	}
 
-	public boolean getStateFinish() //Phuong thuc de lay trang thai da sort xong hay chua
-	{
-		return(bSortDone);
-	}
+	 public int[] getArray() {
+	        return iArray;
+	    }
+	    
+	
+	public boolean isSorted() {
+        
+        return(bSortDone);
+    }
 	
 	public abstract StateSorting getStateSorting(); 
     public abstract StateSwap getSwapSorting();
+    public abstract void sort();
 
 }

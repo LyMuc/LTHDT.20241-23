@@ -150,20 +150,17 @@ public class MergeController {
     @FXML
     void sortWithColor() {
         if (isSorting) {
-            timeline.stop();
-            isSorting = false;
+            return;
         }
 
-        Sort.bSortDone = false;
-
+        // Lấy dữ liệu từ inputArea
         String inputText = arrayInput.getText().trim();
         if (inputText.isEmpty()) {
-            showAlert("No array input provided.");
+
             return;
         }
 
         try {
-
             String[] parts = inputText.split("\\s+");
             int[] array = new int[parts.length];
             for (int i = 0; i < parts.length; i++) {
@@ -173,53 +170,62 @@ public class MergeController {
             mergeSort = new MergeSort(array, array.length);
             isSorting = true;
 
-            displayArray(array, -1, -1);
+            // Hiển thị mảng ban đầu
+            displayArray(array, -1, -1, -1);
 
-            if (timeline != null) {
-                timeline.stop();
-            }
-
-            timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> performSortingStep()));
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
-
+            // Cấu hình animation để tự động chạy sorting
+            performSortingStep();
         } catch (NumberFormatException e) {
-            showAlert("Invalid input. Please enter a valid array of integers.");
+
         }
     }
 
     private void performSortingStep() {
         if (mergeSort.isSorted()) {
-            timeline.stop();
-            displayArray(mergeSort.getArray(), -1, -1);
-
+            displayArray(mergeSort.getArray(), -1, -1, -1);
             isSorting = false;
+            
         } else {
             StateSorting stateSorting = mergeSort.getStateSorting();
-            StateSwap stateSwap = mergeSort.getSwapSorting();
-            displayArray(mergeSort.getArray(), stateSorting.getiArg1(), stateSwap.getiArg1());
+            displayArray(mergeSort.getArray(), stateSorting.getiArg1(), -1, -1);
+
+            PauseTransition pauseRed = new PauseTransition(Duration.seconds(1));
+            pauseRed.setOnFinished(event -> {
+                StateSwap stateSwap = mergeSort.getSwapSorting();
+                displayArray(mergeSort.getArray(), -1, stateSwap.getiArg1(), stateSwap.getiArg2());
+
+                PauseTransition pauseBlue = new PauseTransition(Duration.seconds(1));
+                pauseBlue.setOnFinished(event2 -> performSortingStep());
+                pauseBlue.play();
+            });
+            pauseRed.play();
         }
     }
 
-    private void displayArray(int[] array, int current, int swapping) {
+
+    private void displayArray(int[] array, int current, int swapping1, int swapping2) {
         resultArea.getChildren().clear();
         resultArea.setTextAlignment(TextAlignment.CENTER);
+
+        // Tô màu đỏ cho phần tử current
         for (int i = 0; i < array.length; i++) {
             Text text = new Text(array[i] + " ");
-
-            // Điều chỉnh font-size và màu sắc
             text.setStyle("-fx-font-size: 36px;");
 
             if (i == current) {
                 text.setStyle("-fx-fill: red; -fx-font-size: 36px;");
-            } else if (i == swapping) {
-                text.setStyle("-fx-fill: blue; -fx-font-size: 36px;");
-            } else {
+            }
+            else if(i == swapping1 || i == swapping2){
+            	text.setStyle("-fx-fill: blue; -fx-font-size: 36px;");
+            }
+            else {
                 text.setStyle("-fx-fill: black; -fx-font-size: 36px;");
             }
 
             resultArea.getChildren().add(text);
         }
+
+      // Kích hoạt độ trễ để chờ 1 giây trước khi chuyển sang tô màu xanh
     }
 
     private void showAlert(String message) {

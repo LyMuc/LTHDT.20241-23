@@ -16,6 +16,7 @@ public class MergeSort extends Sort {
         this.leftStart = 0; // Vị trí bắt đầu ban đầu là 0
         this.isMerging = false; // Chưa bắt đầu gộp
         this.tempArray = new int[iNbElement]; // Khởi tạo mảng tạm với kích thước của mảng đầu vào
+        bSortDone=false;
     }
 
     public void sort() {
@@ -94,23 +95,13 @@ public class MergeSort extends Sort {
         return stateSwap;
     }
 
-    public void displayFinalArray() {
+    /*public void displayFinalArray() {
         if (!isMerging) { // Chỉ hiển thị khi hoàn thành một lần gộp
             for (int i = 0; i < iNbElement; i++) {
                 System.out.print(iArray[i] + " ");
             }
             System.out.println();
         }
-    }
-
-    // Kiểm tra xem thuật toán đã hoàn thành chưa
-    public boolean isSorted() {
-        return bSortDone; // Thuộc tính bSortDone có sẵn từ lớp cha Sort
-    }
-
-    // Trả về mảng hiện tại
-    public int[] getArray() {
-        return iArray; // iArray là mảng lưu trữ chính từ lớp cha Sort
-    }
+    }*/
 
 }
