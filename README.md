@@ -56,7 +56,7 @@
 
 ## Link demo project
 
-[Link Demo Project](https://husteduvn-my.sharepoint.com/:v:/g/personal/son_lt225919_sis_hust_edu_vn/EUWbC4StfmtFoJrZpDYlfhEBopldTDnNZ2pkz4J3ThTdEA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=3yUo94)
+[Link Demo Project](https://husteduvn-my.sharepoint.com/personal/son_lt225919_sis_hust_edu_vn/_layouts/15/stream.aspx?id=%2Fpersonal%2Fson%5Flt225919%5Fsis%5Fhust%5Fedu%5Fvn%2FDocuments%2FRecordings%2FMeeting%20with%20Le%20Thai%20Son%2020225919%2D20241225%5F232601%2DMeeting%20Recording%2Emp4&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifSwicGxheWJhY2tPcHRpb25zIjp7fX0&ct=1735144609417&or=Teams%2DHL&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ebf84325f%2D3d6e%2D4a32%2Daf24%2D7b8156c76b01)
 
 ---
 
